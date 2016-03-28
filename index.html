@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+      var state = prompt("what state r ye in? (abbreviated pls!)")
+      var city = prompt("how 'bout the city there, laddie?")
+      $.getJSON("http://cooper-union-weather-proxy.herokuapp.com/weather/" + state + "/" + city, function(response){
+        console.log(response);
+
+        var currentTemp = response.current_observation.feelslike_f;
+
+        if(currentTemp < 50) {
+          $("#temppic").css('background-image', 'url("https://c1.staticflickr.com/3/2275/2227609540_011894456d.jpg")');
+        } else {
+          $("#temppic").css('background-image', 'url("http://lgcdn.amiclubwear.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/c/o/costume-men-bbb4-m6541blackwhitered_2.jpg")');
+        }
+
+        $("#temppic").css('height', '600')
+        $("#temppic").css('width', '2000')
+
+
+        $("#tempbody").append("it feels like it's " + response.current_observation.feelslike_f + " degrees F, matey!");
+
+        if (currentTemp < 50) {
+          $("#tempbody").append(" it's pretty chilly out thur! ~")
+        } else {
+          $("#tempbody").append(" it's pirate weather! ~")
+        }
+
+
+        var currentIcon = '<img src="'+response.current_observation.icon_url+'"/>';
+
+        $("#tempbody").append(currentIcon);
+
+        });
+      </script>
+      <style>
+      #tempbody {
+        color:red;
+        font-family: cursive;
+        font-size: 50px;
+      }
+      </style>
+  </head>
+  <body>
+    <div id="tempbody"></div>
+    <div id="temppic"</div>
+  </body>
+</html>
